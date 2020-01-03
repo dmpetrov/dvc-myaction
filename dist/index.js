@@ -6002,13 +6002,15 @@ const octokit = new github.GitHub(github_token);
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
+  const cloud = core.getInput('cloud');
+  console.log(`Cloud ${cloud}!`);
+
   const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  core.setOutput("pull_time", time);
+  core.setOutput("reproduce_time", time);
+  core.setOutput("data_diff_time", time);
+  core.setOutput("metrics_diff_time", time);
+
 } catch (error) {
   core.setFailed(error.message);
 }
